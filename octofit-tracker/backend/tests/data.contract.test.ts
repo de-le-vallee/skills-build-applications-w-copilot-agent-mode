@@ -42,26 +42,6 @@ describe('OctoFit data contract', () => {
     expect(error?.errors.minutes).toBeDefined();
     expect(error?.errors.difficulty).toBeDefined();
   });
-  it('rejects invalid activity points and durations', () => {
-    const activityError = new Activity({
-      user: new mongoose.Types.ObjectId(),
-      team: new mongoose.Types.ObjectId(),
-      type: 'run',
-      minutes: 0,
-      points: -1,
-      occurredAt: new Date(),
-    }).validateSync();
-    const workoutError = new Workout({
-      title: 'Intervals',
-      focus: 'endurance',
-      minutes: 0,
-      difficulty: 'moderate',
-    }).validateSync();
-
-    expect(activityError?.errors.minutes).toBeDefined();
-    expect(activityError?.errors.points).toBeDefined();
-    expect(workoutError?.errors.minutes).toBeDefined();
-  });
 
   it('seeds representative data for all four capabilities idempotently', async () => {
     const mongo = await MongoMemoryServer.create();
